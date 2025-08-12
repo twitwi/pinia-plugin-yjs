@@ -31,14 +31,30 @@ export function getChanges(a: Diffable, b: Diffable): Change[] {
 }
 
 function getStringChanges(a: string, b: string): Change[] {
+  function heuristicShouldReplace(a: string, b: string) {
+    const S = 20
+    if (a.length + b.length < 200) {
+      return false
+    }
+    // no common reasonable prefix or suffix, just replace
+    return !a.startsWith(b.slice(0, S))
+        && !b.startsWith(a.slice(0, S))
+        && !a.endsWith(b.slice(-S))
+        && !b.endsWith(a.slice(-S))
+  }
+
   if (a === b) { return [] }
   else if (a.length === 0) {
-    return b.split('').map((character, index) =>
-      [ChangeType.INSERT, index, character])
+    return [[ChangeType.INSERT, 0, b]]
   }
   else if (b.length === 0) {
-    return a.split('').map(() =>
-      [ChangeType.DELETE, 0, undefined])
+    return [[ChangeType.DELETE, 0, a.length]]
+  }
+  else if (heuristicShouldReplace(a, b)) {
+    return [
+      [ChangeType.DELETE, 0, a.length],
+      [ChangeType.INSERT, 0, b],
+    ]
   }
   else if (!hasCommonSubsequence(a, b)) {
     const deletes = a.split('').map<Change>(() =>
