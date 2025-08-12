@@ -87,7 +87,6 @@
     "yjs": "^13.6.12"
   },
   "simple-git-hooks": {
-    "pre-commit": "pnpm lint-staged"
   },
   "lint-staged": {
     "*": "eslint --fix"
