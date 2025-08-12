@@ -1,5 +1,19 @@
 import * as Y from 'yjs'
 
+export function valueToY(v: any) {
+    if (Array.isArray(v))
+      return arrayToYArray(v)
+
+    else if (v instanceof Object)
+      return objectToYMap(v)
+
+    else if (typeof v === 'string')
+      return stringToYText(v)
+
+    else
+      return v
+}
+
 /**
  * Converts a normal JavaScript array to a YArray shared type. Any nested
  * objects or arrays are turned into YMaps and YArrays, respectively.
@@ -19,18 +33,8 @@ import * as Y from 'yjs'
 export function arrayToYArray(array: any[]): Y.Array<any> {
   const yarray = new Y.Array()
 
-  array.forEach((value) => {
-    if (Array.isArray(value))
-      yarray.push([arrayToYArray(value)])
-
-    else if (value instanceof Object)
-      yarray.push([objectToYMap(value)])
-
-    else if (typeof value === 'string')
-      yarray.push([stringToYText(value)])
-
-    else
-      yarray.push([value])
+  array.forEach((v) => {
+    yarray.push([valueToY(v)])
   })
 
   return yarray
@@ -95,18 +99,8 @@ export function yArrayToArray(yarray: Y.Array<any>): any[] {
 export function objectToYMap(object: any): Y.Map<any> {
   const ymap = new Y.Map()
 
-  Object.entries(object).forEach(([property, value]) => {
-    if (Array.isArray(value))
-      ymap.set(property, arrayToYArray(value))
-
-    else if (value instanceof Object)
-      ymap.set(property, objectToYMap(value))
-
-    else if (typeof value === 'string')
-      ymap.set(property, stringToYText(value))
-
-    else
-      ymap.set(property, value)
+  Object.entries(object).forEach(([k, v]) => {
+    ymap.set(k, valueToY(v))
   })
 
   return ymap
