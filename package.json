@@ -62,7 +62,7 @@
     "prepare": "simple-git-hooks"
   },
   "peerDependencies": {
-    "pinia": "^2.0.0",
+    "pinia": "^3.0.0",
     "vue": "^3.0.0",
     "yjs": "^13.0.0"
   },
@@ -75,7 +75,7 @@
     "eslint": "^8.56.0",
     "esno": "^4.0.0",
     "lint-staged": "^15.2.0",
-    "pinia": "^2.1.7",
+    "pinia": "^3.0.0",
     "pnpm": "^8.14.0",
     "rimraf": "^5.0.5",
     "simple-git-hooks": "^2.9.0",
