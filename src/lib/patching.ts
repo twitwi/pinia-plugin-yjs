@@ -65,7 +65,7 @@ export function patchSharedType(sharedType: Y.Map<any> | Y.Array<any> | Y.Text, 
 
         else if (sharedType instanceof Y.Text)
         // A delete operation for text is only ever for a single character.
-        { sharedType.delete(property as number, 1) }
+        { sharedType.delete(property as number, value ?? 1) }
 
         break
 
