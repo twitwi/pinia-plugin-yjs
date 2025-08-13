@@ -4,11 +4,12 @@ import type * as Y from 'yjs'
 
 export interface YjsStateOptions {
   doc?: MaybeRef<Y.Doc | null>
-  sharing?: boolean
+  sharing?: MaybeRef<boolean | string>
 }
 
 export interface YjsStateFactoryOptions {
   doc?: MaybeRef<Y.Doc | null>
+  sharing?: MaybeRef<boolean | string>
 }
 
 declare module 'pinia' {
@@ -19,7 +20,7 @@ declare module 'pinia' {
     /**
      * enables sharing of state between clients via Yjs.
      */
-    sharing?: boolean
+    sharing?: MaybeRef<boolean | string>
   }
 
   export interface PiniaCustomProperties {
