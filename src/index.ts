@@ -38,7 +38,7 @@ export function createPiniaYJSPlugin(
 
         let newlyCreated = false
         if (typeof pluginOptions.sharing === 'string') {
-          const steps = pluginOptions.sharing.trim().split(' ')
+          const steps = pluginOptions.sharing.trim().replaceAll(/@@store@@/g, `${store.$id}`).split(' ')
           let res = doc.getMap(steps[0]) as Y.Map<Y.Map<any>>
           for (const s of steps.slice(1)) {
             if (!res.has(s)) {
